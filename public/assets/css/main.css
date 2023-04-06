@@ -1206,6 +1206,14 @@ h6 {
     font-family: var(--font-secondary);
 }
 
+.heroo h2 {
+    padding: 120px 0 50px 0;
+    font-size: 56px;
+    font-weight: 500;
+    color: #fff;
+    font-family: var(--font-secondary);
+  }
+
 .hero h2 span {
     position: relative;
     z-index: 1;

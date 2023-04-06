@@ -27,6 +27,10 @@ Route::get('/about', function () {
     return view('about');
 });
 
+Route::get('/cariorder', function () {
+    return view('cariorder');
+});
+
 Route::get('/{nickname}', [ProductController::class, 'getProduct']);
 
 Route::post('/pembayaran', [ProductController::class, 'order']);

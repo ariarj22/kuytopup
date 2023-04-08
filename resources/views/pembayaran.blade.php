@@ -57,16 +57,15 @@
     </div>
   </header><!-- End Header -->
 
-  <main id="main" data-aos="fade" data-aos-delay="1500">
   <div class="page-header d-flex align-items-center">
-      <div class="container position-relative">
-        <div class="row d-flex justify-content-center">
-          <div class="col-lg-6 text-center">
-          <h2>KuyBayar</h2>
-          </div>
+    <div class="container position-relative">
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-6 text-center">
+        <h2>KuyBayar</h2>
         </div>
       </div>
-    </div><!-- End Page Header -->
+    </div>
+  </div><!-- End Page Header -->
 
   <main id="main" data-aos="fade" data-aos-delay="1500">
 
@@ -89,7 +88,7 @@
           </div><!-- End Pricing Item -->
           <div class="col-lg-6">
             <a href="/pembayaran/{{ $id }}/edit" class="btn btn-primary">Ubah Pesanan</a>
-            <button  class="btn btn-danger">Hapus Pesanan</button>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Batalkan Pesanan</button>
           </div>
     </section>
 
@@ -160,6 +159,25 @@
   <div id="preloader">
     <div class="line"></div>
   </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header modal-saya">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Apa kamu yakin?</h1>
+        </div>
+        <div class="modal-footer modal-saya">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+          <form method="POST" action="/pembayaran/{{ $id }}/cancel">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger">Ya</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Vendor JS Files -->
   <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -170,7 +188,7 @@
 
   <!-- Template Main JS File -->
   <script src="{{ asset('assets/js/main.js') }}"></script>
-
+  
 </body>
 
 </html>

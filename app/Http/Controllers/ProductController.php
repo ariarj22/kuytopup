@@ -64,4 +64,21 @@ class ProductController extends Controller
 
         return redirect()->route('pembayaran', ['id'=>$id]);
     }
+
+    public function cari(Request $request) {
+        $id = $request->input('orderan');
+        $order = Order::find($id, 'id');
+        if ($order === null) {
+            return view('gaorder');
+        } else {
+            return redirect()->route('pembayaran', ['id'=>$id]);
+        }
+    }
+
+    public function cancel($id) {
+        $order = Order::findOrFail($id, 'id');
+        $order->delete();
+
+        return redirect('');
+    }
 }

@@ -65,8 +65,11 @@
         <div class="heroo col-lg-6 text-center">
           <h2>Cari Order</h2>
           <div class="input-group mb-3">
-            <input type="text" id="inputan" onkeyup="search()" class="form-control" placeholder="Masukkan Order ID" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <a href="/pembayaran" class="btn-get-started" id="button-addon2">Cari<a>
+            <form action="{{ url('/cariorder') }}" method="POST" class="d-flex justify-content-center align-items-center flex-fill">
+            @csrf
+            <input type="text" name="orderan" id="orderan" class="form-control" placeholder="Masukkan Order ID" aria-label="Recipient's username" aria-describedby="button-addon2" style="height: 45px">
+            <button type="submit" class="btn-get-started" id="button-addon2">Cari</button>
+            </form>
           </div>         
         </div>
       </div>

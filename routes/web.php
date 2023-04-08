@@ -31,6 +31,8 @@ Route::get('/cariorder', function () {
     return view('cariorder');
 });
 
+Route::post('/cariorder', [ProductController::class, 'cari']);
+
 Route::get('/{nickname}', [ProductController::class, 'getProduct']);
 
 Route::post('/pembayaran', [ProductController::class, 'order']);
@@ -40,3 +42,5 @@ Route::get('/pembayaran/{id}', [ProductController::class, 'bayar'])->name('pemba
 Route::get('/pembayaran/{id}/edit', [ProductController::class, 'formUbah']);
 
 Route::put('/pembayaran/{id}/edit/submit', [ProductController::class, 'ubah'])->name('ubah');
+
+Route::delete('/pembayaran/{id}/cancel', [ProductController::class, 'cancel']);

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Game;
 use App\Models\Product;
 use App\Models\Order;
+use Auth;
 
 class ProductController extends Controller
 {
@@ -80,5 +81,74 @@ class ProductController extends Controller
         $order->delete();
 
         return redirect('');
+    }
+
+    public function index() {
+        $prods = Product::where('game_id', '=', 1)->get();
+        if (request()->segment(1) == 'api') return response()->json([
+            'error' => false,
+            'list' => $prods,
+        ]);
+        return 'asdadad';
+    }
+
+    public function getProduct_f($id) {
+        $products = Product::where('game_id', '=', $id)->get();
+
+        return response()->json($products);
+    }
+
+    public function order_f(Request $request) {
+        $order = new Order();
+        $id = strtoupper(Str::random(6));
+        $order->id = $id;
+        $order->product_id = $request->input('product');
+        $order->in_game_uid = $request->input('uid');
+        $order->user_id = $request->input('user');
+        $order->save();
+
+        return response()->json(['id' => $id, 'product_id' => $order->product_id, 'in_game_uid' => $order->in_game_uid, 'user_id' => $order->user_id]);
+    }
+
+    public function bayar_f($id) {
+        $order = Order::where('id', '=', $id)->get();
+        $product = Product::where('id', '=', $order[0]['product_id'])->get();
+        $game = Game::where('id', '=', $product[0]['game_id'])->get();
+
+        $response = [['order' => $order, 'product' => $product, 'game' => $game, 'order_id' => $id]];
+        return response()->json($response);
+    }
+
+    public function ubah_f(Request $request, $id) {
+        $order = Order::findOrFail($id, 'id');
+
+        $order->product_id = $request->input('product');
+        $order->in_game_uid = $request->input('uid');
+        $order->user_id = $request->input('user');
+        $order->save();
+
+        return response()->json(['id' => $id, 'product_id' => $order->product_id, 'in_game_uid' => $order->in_game_uid, 'user_id' => $order->user_id]);
+    }
+
+    public function cancel_f($id) {
+        $order = Order::findOrFail($id, 'id');
+        $order->delete();
+
+        $response = ['status'=>200, 'message'=>'Delete successfully'];
+        return $response;
+    }
+
+    public function histori($id) {
+        $order = Order::where('user_id', '=', $id)->get();
+        
+        foreach ($order as $or) {
+            $product = Product::where('id', '=', $or['product_id'])->get();
+            $game = Game::where('id', '=', $product[0]['game_id'])->get();
+
+            $or->product = $product;
+            $or->game = $game;
+        }
+
+        return response()->json($order);
     }
 }

@@ -64,4 +64,10 @@ class GameController extends Controller
     {
         //
     }
+
+    public function index_f() {
+        $data = Game::all();
+
+        return response()->json($data);
+    }
 }

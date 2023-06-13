@@ -15,18 +15,19 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->string('name');
             $table->string('nickname');
+            $table->string('image_url');
             $table->timestamps();
         });
 
         DB::table('games')->insert([
-            ['name' => 'Apex Legends', 'nickname' => 'apex'],
-            ['name' => 'Genshin Impact', 'nickname' => 'genshin'],
-            ['name' => 'Honkai Impact', 'nickname' => 'honkai'],
-            ['name' => 'Azur Lane', 'nickname' => 'azur-lane'],
-            ['name' => 'Blue Archive', 'nickname' => 'blue-archive'],
-            ['name' => 'Mobile Legends: Bang Bang', 'nickname' => 'mobile-legends'],
-            ['name' => 'Valorant', 'nickname' => 'valorant'],
-            ['name' => 'Wuthering Waves', 'nickname' => 'wuthering-waves']
+            ['name' => 'Apex Legends', 'nickname' => 'apex', 'image_url' => 'assets/page-1/images/apex1.png'],
+            ['name' => 'Genshin Impact', 'nickname' => 'genshin', 'image_url' => 'assets/page-1/images/apex1-mCS.png'],
+            ['name' => 'Honkai Impact', 'nickname' => 'honkai', 'image_url' => 'assets/page-1/images/apex1-v8n.png'],
+            ['name' => 'Azur Lane', 'nickname' => 'azur-lane', 'image_url' => 'assets/page-1/images/apex1-DSe.png'],
+            ['name' => 'Blue Archive', 'nickname' => 'blue-archive', 'image_url' => 'assets/page-1/images/apex1-fGz.png'],
+            ['name' => 'Mobile Legends', 'nickname' => 'mobile-legends', 'image_url' => 'assets/page-1/images/ml1.png'],
+            ['name' => 'Valorant', 'nickname' => 'valorant', 'image_url' => 'assets/page-1/images/valo1.png'],
+            ['name' => 'Wuthering Waves', 'nickname' => 'wuthering-waves', 'image_url' => 'assets/page-1/images/apex1-yxA.png']
         ]);
     }
 

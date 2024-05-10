@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="dev-master@">
-  <file src="src/Console.php">
-    <ForbiddenCode occurrences="2">
-      <code>shell_exec('stty size')</code>
-      <code>shell_exec('stty')</code>
-    </ForbiddenCode>
-  </file>
-</files>

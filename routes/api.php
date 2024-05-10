@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/', [GameController::class, 'index_f']);
-Route::get('/product_{id}', [ProductController::class, 'getProduct_f']);
+Route::get('/{nickname}', [ProductController::class, 'getProduct_f']);
 
 // login
 Route::post('/register', [AuthController::class, 'Register']);

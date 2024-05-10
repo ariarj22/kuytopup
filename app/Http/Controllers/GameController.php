@@ -14,7 +14,10 @@ class GameController extends Controller
     {
         //
         $games = Game::all();
-        return view('index', ['games'=>$games]);
+        return view('index', [
+            'games' => $games,
+            'user' => auth()->user()
+        ]);
     }
 
     /**

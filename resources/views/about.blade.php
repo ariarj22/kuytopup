@@ -54,7 +54,6 @@
           <li><a href="/">Home</a></li>
           <li><a href="/about" class="active">About</a></li>
           <li><a href="/contact" >Contact</a></li>
-          <li><a href="/cariorder" >Cari Order</a></li>
         </ul>
       </nav><!-- .navbar -->
 

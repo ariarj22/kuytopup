@@ -17,11 +17,12 @@ use PHPUnit\Logging\TeamCity\TeamCityLogger;
 use PHPUnit\Logging\TestDox\TestResultCollection;
 use PHPUnit\TestRunner\TestResult\TestResult;
 use PHPUnit\TextUI\Configuration\Configuration;
+use PHPUnit\TextUI\DirectoryDoesNotExistException;
+use PHPUnit\TextUI\InvalidSocketException;
 use PHPUnit\TextUI\Output\Default\ProgressPrinter\ProgressPrinter as DefaultProgressPrinter;
 use PHPUnit\TextUI\Output\Default\ResultPrinter as DefaultResultPrinter;
+use PHPUnit\TextUI\Output\Default\UnexpectedOutputPrinter;
 use PHPUnit\TextUI\Output\TestDox\ResultPrinter as TestDoxResultPrinter;
-use PHPUnit\Util\DirectoryDoesNotExistException;
-use PHPUnit\Util\InvalidSocketException;
 use SebastianBergmann\Timer\Duration;
 use SebastianBergmann\Timer\ResourceUsageFormatter;
 
@@ -40,20 +41,31 @@ final class Facade
      * @throws EventFacadeIsSealedException
      * @throws UnknownSubscriberTypeException
      */
-    public static function init(Configuration $configuration): Printer
+    public static function init(Configuration $configuration, bool $extensionReplacesProgressOutput, bool $extensionReplacesResultOutput): Printer
     {
         self::createPrinter($configuration);
 
         assert(self::$printer !== null);
 
-        self::createProgressPrinter($configuration);
-        self::createResultPrinter($configuration);
-        self::createSummaryPrinter($configuration);
+        if ($configuration->debug()) {
+            return self::$printer;
+        }
+
+        self::createUnexpectedOutputPrinter();
+
+        if (!$extensionReplacesProgressOutput) {
+            self::createProgressPrinter($configuration);
+        }
+
+        if (!$extensionReplacesResultOutput) {
+            self::createResultPrinter($configuration);
+            self::createSummaryPrinter($configuration);
+        }
 
         if ($configuration->outputIsTeamCity()) {
             new TeamCityLogger(
                 DefaultPrinter::standardOutput(),
-                EventFacade::instance()
+                EventFacade::instance(),
             );
         }
 
@@ -109,6 +121,10 @@ final class Facade
     {
         $printerNeeded = false;
 
+        if ($configuration->debug()) {
+            $printerNeeded = true;
+        }
+
         if ($configuration->outputIsTeamCity()) {
             $printerNeeded = true;
         }
@@ -150,9 +166,10 @@ final class Facade
 
         new DefaultProgressPrinter(
             self::$printer,
+            EventFacade::instance(),
             $configuration->colors(),
             $configuration->columns(),
-            EventFacade::instance()
+            $configuration->source(),
         );
 
         self::$defaultProgressPrinter = true;
@@ -184,24 +201,24 @@ final class Facade
                 self::$printer,
                 true,
                 true,
+                true,
                 false,
                 false,
+                true,
                 false,
                 false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
+                $configuration->displayDetailsOnTestsThatTriggerDeprecations(),
+                $configuration->displayDetailsOnTestsThatTriggerErrors(),
+                $configuration->displayDetailsOnTestsThatTriggerNotices(),
+                $configuration->displayDetailsOnTestsThatTriggerWarnings(),
+                $configuration->reverseDefectList(),
             );
         }
 
         if ($configuration->outputIsTestDox()) {
             self::$testDoxResultPrinter = new TestDoxResultPrinter(
                 self::$printer,
-                $configuration->colors()
+                $configuration->colors(),
             );
         }
 
@@ -227,7 +244,7 @@ final class Facade
             $configuration->displayDetailsOnTestsThatTriggerErrors(),
             $configuration->displayDetailsOnTestsThatTriggerNotices(),
             $configuration->displayDetailsOnTestsThatTriggerWarnings(),
-            $configuration->reverseDefectList()
+            $configuration->reverseDefectList(),
         );
     }
 
@@ -244,5 +261,16 @@ final class Facade
             self::$printer,
             $configuration->colors(),
         );
+    }
+
+    /**
+     * @throws EventFacadeIsSealedException
+     * @throws UnknownSubscriberTypeException
+     */
+    private static function createUnexpectedOutputPrinter(): void
+    {
+        assert(self::$printer !== null);
+
+        new UnexpectedOutputPrinter(self::$printer, EventFacade::instance());
     }
 }

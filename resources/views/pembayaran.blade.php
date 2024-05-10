@@ -35,21 +35,18 @@
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid d-flex align-items-center justify-content-between">
 
-      <a href="/" class="logo d-flex align-items-center  me-auto me-lg-0">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="{{ asset('assets/img/Hu-Tao-2.png') }}" alt="">
-        <!-- <i class="bi bi-camera"></i> -->
-        <h1>KuyTopup</h1>
+      <a href="/history" class="logo d-flex align-items-center  me-auto me-lg-0">
+        <h1>Welcome, {{ $user->name }}</h1>
       </a>
 
-      <!-- <nav id="navbar" class="navbar">
+      <nav id="navbar" class="navbar">
         <ul>
         <li><a href="/">Home</a></li>
           <li><a href="/about" >About</a></li>
           <li><a href="/contact" >Contact</a></li>
-          <li><a href="/pembayaran" class="active" >Pembayaran</a></li>
+          <li><a href="/logout" >Logout</a></li>
         </ul>
-      </nav>.navbar -->
+      </nav><!-- .navbar -->
 
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
@@ -82,8 +79,10 @@
 
           <div class="col-lg-6">
             <div class="pricing-item d-flex justify-content-between">
-              <h3>{{ $product . ' ' . $game }}</h3>
+              <h3>{{ $product . ' ' . $game }} <br> UID {{ $uid }}</h3>
               <h4>{{ 'Rp ' . number_format($price, 0, ',', '.') }}</h4>
+            </div>
+            <div>
             </div>
           </div><!-- End Pricing Item -->
           <div class="col-lg-6">

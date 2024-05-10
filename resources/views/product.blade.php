@@ -34,11 +34,8 @@
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid d-flex align-items-center justify-content-between">
 
-      <a href="/" class="logo d-flex align-items-center  me-auto me-lg-0">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="{{ asset('assets/img/Hu-Tao-2.png') }}" alt="">
-        <!-- <i class="bi bi-camera"></i> -->
-        <h1>KuyTopup</h1>
+      <a href="/history" class="logo d-flex align-items-center  me-auto me-lg-0">
+        <h1>Welcome, {{ $user->name }}</h1>
       </a>
 
       <nav id="navbar" class="navbar">
@@ -46,7 +43,7 @@
         <li><a href="/">Home</a></li>
           <li><a href="/about" >About</a></li>
           <li><a href="/contact" >Contact</a></li>
-          <li><a href="/cariorder" >Cari Order</a></li>
+          <li><a href="/logout" >Logout</a></li>
         </ul>
       </nav><!-- .navbar -->
 
@@ -111,15 +108,9 @@
 
             <div class="col-lg-9">
                 <div class="row">
-                    <div class="col-md-6 form-group">
+                    <div class="col-md form-group">
                     <input type="number" name="uid" class="form-control" id="uid" placeholder="UID" required>
                     </div>
-                    <div class="col-md-6 form-group mt-3 mt-md-0">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
-                    </div>
-                </div>
-                <div class="form-group mt-3">
-                    <input type="text" class="form-control" name="phone" id="phone" placeholder="Nomor HP" required>
                 </div>
                 <div class="my-3">
                     <div class="error-message"></div>

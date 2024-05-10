@@ -36,11 +36,8 @@
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid d-flex align-items-center justify-content-between">
 
-      <a href="/" class="logo d-flex align-items-center  me-auto me-lg-0">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="assets/img/Hu-Tao-2.png" alt="">
-        <!-- <i class="bi bi-camera"></i> -->
-        <h1>KuyTopup</h1>
+      <a href="/history" class="logo d-flex align-items-center  me-auto me-lg-0">
+        <h1>Welcome, {{ $user->name }}</h1>
       </a>
 
       <nav id="navbar" class="navbar">
@@ -48,7 +45,7 @@
         <li><a href="/"class="active">Home</a></li>
           <li><a href="/about" >About</a></li>
           <li><a href="/contact" >Contact</a></li>
-          <li><a href="/cariorder" >Cari Order</a></li>
+          <li><a href="/logout" >Logout</a></li>
         </ul>
       </nav><!-- .navbar -->
 
@@ -70,7 +67,7 @@
           <div class="input-group mb-3">
             <input type="text" id="inputan" onkeyup="search()" class="form-control" placeholder="Mau topup apa hari ini?" aria-label="Recipient's username" aria-describedby="button-addon2">
             <button class="btn-get-started" disabled type="button" id="button-addon2">Cari Game</button>
-          </div>         
+          </div>                 
         </div>
       </div>
     </div>
